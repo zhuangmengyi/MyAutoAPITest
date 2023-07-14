@@ -7,10 +7,10 @@ user_workbook = xlrd.open_workbook("../testCases/user.xlsx")
 # 获取第一个sheet表
 
 user_table = user_workbook.sheets()[0]
-test_table = test_workbook.sheets()[0]
 
 # 遍历该表，使用nrows代表行，ncols代表列
-def read_excel(item):
+def read_excel(item, sheet):
+    test_table = test_workbook.sheets()[sheet]
     item_col = 0
     value = []
     for i in range(test_table.nrows):

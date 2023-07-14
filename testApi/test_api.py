@@ -4,7 +4,14 @@ from getToken.login import user_login
 from readExcel.readExcel import read_excel
 import json
 
-data = list(zip(read_excel('路径'), read_excel('传参')))
+# sheet参数0为APP，1为管理后天，2为礼品卡，3为提现
+data = list(zip(read_excel('路径', 1), read_excel('传参', 1)))
+
+# APP登录
+# token = user_login(1).front_get_token()
+
+# 后台登录：null为管理后台，11为礼品卡，12为提现
+token = user_login('').manager_get_token()
 
 @pytest.mark.parametrize("path, json_str", data)
 def test_api(path, json_str):
@@ -17,7 +24,6 @@ def test_api(path, json_str):
     elif json_str == '':  # 如果这种情况不做处理会报错
         json_dict = ''
 
-    token = user_login(1).front_get_token()
     headers = {"token": token}
 
     res = requests.post(url=url, json=json_dict, headers=headers)
